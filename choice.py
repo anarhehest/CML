@@ -20,13 +20,20 @@ err_map = {
     ValueError: 0j,
 }
 
+def strips(s, keys):
+    for v in keys:
+        if v in s:
+            s.strip(v)
+    return s
+
 
 def read_line(line:str) -> tuple[int, int, str]:
     try:
         first = line.strip()[0]
     except IndexError:
         return 0, err_map[IndexError], line
-    white = len(line.strip('\n')) - len(line.strip('\n').strip())
+    white = len(line.strip('\n')) - len(line.strip('\n').strip('\t').strip())
+    #white = len(strips(line, '\n')) - len(strips(line, ['\n', ' ', '\t']))
     if first in mode_map.keys():
         return mode_map.get(first), white, line
     elif first.isalpha():
@@ -70,6 +77,8 @@ for i in range(1, len(sys.argv)):
     print(sys.argv[i])
     with open(sys.argv[i], 'r') as r:
         for line in r.readlines():
-            lines.append(read_line(line))
+            l = read_line(line)
+            print(l)
+            lines.append(l)
     
     

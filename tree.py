@@ -1,29 +1,38 @@
-import io
-from typing import List
-
-(IN, OPT, PRO, CON, QUE, STAR, HASH,) = range(7)
-
-class Node:
-    counter = 0
-
-    def __init__(self, mode, value, depth):
-        self.id: int = Node.counter
-        Node.counter += 1
-        self.mode: int = mode
-        self.value: int = value
-        self.depth: int = depth
-        self.children: List[Node] = list()
-        self.links: List[Node] = list()
+from io import TextIOWrapper
+from treelib import Tree
 
 
-class Tree:
-    root:Node
+INTEND_CHAR = "\t"
+(IN, PRO, CON, OUT) = range(4)
 
-    def __init__(self, f:io.TextIOWrapper):
-        for l in f.readlines():
-            if l.startswith('<'):
-                self.root = Node(0, IN, 0, dict())
+types = {
+    '<': IN,
+    '+': PRO,
+    '-': CON,
+    '>': OUT
+}
 
 
-if __name__ == "__main__":
-    print(Tree(open('example.q')))
+def populate_tree(t:Tree, f:TextIOWrapper):
+    lines = f.readlines()
+    for i in range(0, len(lines)):
+        line = lines[i].rstrip("\n")
+        if len(line) == 0:
+            continue
+        type = line.lstrip(INTEND_CHAR)[0]
+        tag = line.lstrip(INTEND_CHAR).lstrip(type).lstrip(' ')
+        intend = line.count(INTEND_CHAR)
+        print(intend, types[type], tag)
+
+        if intend == types[type] == i == 0:
+            t.create_node(line, type, None, types[type])
+        # TODO: here goes tree population
+        else:
+            raise ValueError
+
+
+
+tree = Tree()
+with open("example.q", 'r') as f:
+    populate_tree(tree, f)
+tree.show()
