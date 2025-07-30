@@ -28,4 +28,8 @@ class Choice:
         return self.results
 
     def choose(self):
-        return max(self.results.items(), key=lambda x: x[1]['total'])
+        return [
+            (option, stats)
+            for option, stats in self.results.items()
+            if stats['total'] == max(item['total'] for item in self.results.values())
+        ]

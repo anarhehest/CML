@@ -12,8 +12,8 @@ def main(file):
     for option, stats in choice.results.items():
         print(f'> {option} ({stats['pros']} - {stats["cons"]} = {stats["total"]})')
 
-    best_option, best_stats = choice.choose()
-    print(f'< {best_option} ({best_stats['total']})')
+    for best_option, best_stats in choice.choose():
+        print(f'< {best_option} ({best_stats['total']})')
 
 
 if __name__ == "__main__":
