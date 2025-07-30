@@ -1,7 +1,12 @@
 # Choice
 
-This Python program analyzes decision trees defined in YAML format, calculating pros/cons for each option and determining the optimal choice based on scored results.
+This Python program analyzes decision trees, calculating pros/cons for each option and determining the optimal choice based on scored results.
 It handles arbitrarily nested structures and real-world data scenarios.
+
+**Supported formats**:
+* CML (Choice Markdown Language)
+* JSON
+* YAML
 
 ### Usage
 
@@ -10,28 +15,29 @@ git clone https://github.com/anarhehest/choice.git
 cd choice
 python -m venv .venv
 .venv/bin/pip install -r requirements.txt
-.venv/bin/python -m main -f examples/yaml/example.yml
+.venv/bin/python -m main -f examples/cml/example.cml
 ```
 
-### YML input file example:
-```yaml
-Чё надо?:
-  Шоколада:
-    pros:
-      - Вкусно
-      - Вкусненько
-    cons:
-      - Зубки
-  Маринада:
-    Почему?:
-      Потому что:
-        pros:
-          - Потому что потому
-        cons:
-          - Да почему?!
-      По качану:
-        cons:
-          - Не бейте
+### CML input example:
+```plain
+< Чё надо?
+    < Шоколада
+        + Вкусно
+        + Вкусненько
+        - Зубки спасибо не скажут
+    >
+    < Маринада
+        < Почему?
+            < Потому что
+                + Потому что потому
+                - Да почему?!
+            >
+            < По качану
+                - Не бейте
+            >
+        >
+    >
+>
 ```
 
 ### Output example:
