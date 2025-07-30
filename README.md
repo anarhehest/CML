@@ -10,7 +10,7 @@ git clone https://github.com/anarhehest/choice.git
 cd choice
 python -m venv .venv
 .venv/bin/pip install -r requirements.txt
-.venv/bin/python -m main -f examples/example.yml
+.venv/bin/python -m main -f examples/yaml/example.yml
 ```
 
 ### YML example:

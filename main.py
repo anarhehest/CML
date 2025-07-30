@@ -1,11 +1,7 @@
 import argparse
-import yaml
 from collections.abc import Mapping
 
-
-def load_data(file_path):
-    with open(file_path, 'r') as stream:
-        return yaml.safe_load(stream)
+from lib.file import File
 
 
 def evaluate(data, current_path=None, results=None):
@@ -37,7 +33,7 @@ def choose(results):
 
 
 def main(file):
-    data = load_data(file)
+    data = File.load(file)
     results = evaluate(data)
 
     for option, stats in results.items():
