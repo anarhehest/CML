@@ -1,45 +1,18 @@
 import argparse
-from collections.abc import Mapping
 
+from lib.data import Choice
 from lib.file import File
-
-
-def evaluate(data, current_path=None, results=None):
-    if results is None:
-        results = {}
-    if current_path is None:
-        current_path = []
-
-    if isinstance(data, Mapping):
-        for key, value in data.items():
-            new_path = current_path + [key]
-
-            if 'pros' in value or 'cons' in value:
-                pros = value.get('pros', [])
-                cons = value.get('cons', [])
-                path_str = "::".join(new_path)
-                results[path_str] = {
-                    'pros': len(pros),
-                    'cons': len(cons),
-                    'total': len(pros) - len(cons)
-                }
-
-            evaluate(value, new_path, results)
-    return results
-
-
-def choose(results):
-    return max(results.items(), key=lambda x: x[1]['total'])
 
 
 def main(file):
     data = File.load(file)
-    results = evaluate(data)
+    choice = Choice()
+    choice.evaluate(data)
 
-    for option, stats in results.items():
+    for option, stats in choice.results.items():
         print(f'> {option} ({stats['pros']} - {stats["cons"]} = {stats["total"]})')
 
-    best_option, best_stats = choose(results)
+    best_option, best_stats = choice.choose()
     print(f'< {best_option} ({best_stats['total']})')
 
 
