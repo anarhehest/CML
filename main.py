@@ -1,4 +1,4 @@
-import sys
+import argparse
 import yaml
 from collections.abc import Mapping
 
@@ -21,10 +21,10 @@ def evaluate(data, current_path=None, results=None):
             if 'pros' in value or 'cons' in value:
                 pros = value.get('pros', [])
                 cons = value.get('cons', [])
-                path_str = " -> ".join(new_path)
+                path_str = "::".join(new_path)
                 results[path_str] = {
-                    'pros_count': len(pros),
-                    'cons_count': len(cons),
+                    'pros': len(pros),
+                    'cons': len(cons),
                     'total': len(pros) - len(cons)
                 }
 
@@ -36,20 +36,19 @@ def choice(results):
     return max(results.items(), key=lambda x: x[1]['total'])
 
 
-def main(*args):
-    data = load_data(args[0][1])
+def main(file):
+    data = load_data(file)
     results = evaluate(data)
 
-    print("Details:")
     for option, stats in results.items():
-        print(f"\n{option}")
-        print(f"\tPros: {stats['pros_count']}")
-        print(f"\tCons: {stats['cons_count']}")
-        print(f"\tTotal: {stats['total']}")
+        print(f'> {option} ({stats['pros']} - {stats["cons"]} = {stats["total"]})')
 
     best_option, best_stats = choice(results)
-    print(f"\n★ Best choice: {best_option} (Total: {best_stats['total']})")
+    print(f'< {best_option} ({best_stats['total']})')
 
 
 if __name__ == "__main__":
-    main(sys.argv)
+    argparse = argparse.ArgumentParser()
+    argparse.add_argument("-f", "--file", required=True)
+    args = argparse.parse_args()
+    main(args.file)
