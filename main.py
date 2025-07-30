@@ -32,7 +32,7 @@ def evaluate(data, current_path=None, results=None):
     return results
 
 
-def choice(results):
+def choose(results):
     return max(results.items(), key=lambda x: x[1]['total'])
 
 
@@ -43,7 +43,7 @@ def main(file):
     for option, stats in results.items():
         print(f'> {option} ({stats['pros']} - {stats["cons"]} = {stats["total"]})')
 
-    best_option, best_stats = choice(results)
+    best_option, best_stats = choose(results)
     print(f'< {best_option} ({best_stats['total']})')
 
 
