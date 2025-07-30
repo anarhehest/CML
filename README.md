@@ -1,10 +1,10 @@
-# Choice
+# Choice Markdown Language
 
 This Python program analyzes decision trees, calculating pros/cons for each option and determining the optimal choice based on scored results.
 It handles arbitrarily nested structures and real-world data scenarios.
 
 **Supported formats**:
-* CML (Choice Markdown Language)
+* CML
 * JSON
 * YAML
 
