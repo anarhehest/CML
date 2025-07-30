@@ -13,7 +13,7 @@ python -m venv .venv
 .venv/bin/python -m main -f examples/yaml/example.yml
 ```
 
-### YML example:
+### YML input file example:
 ```yaml
 Чё надо?:
   Шоколада:
