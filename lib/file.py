@@ -1,9 +1,9 @@
 import json
 import os
-
 import yaml
 
 class File:
+
     @staticmethod
     def load(file_path):
         match os.path.splitext(file_path)[-1]:
