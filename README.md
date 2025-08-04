@@ -3,22 +3,19 @@
 This Python program analyzes decision trees, calculating pros/cons for each option and determining the optimal choice based on scored results.
 It handles arbitrarily nested structures and real-world data scenarios.
 
-**Supported formats**:
-* CML
-* JSON
-* YAML
+CML was born from the need for a decision-specific markup language that:
 
-### Usage
+🔍 Mirrors human reasoning - Structure matches how people naturally outline options
 
-```shell
-git clone https://github.com/anarhehest/choice.git
-cd choice
-python -m venv .venv
-.venv/bin/pip install -r requirements.txt
-.venv/bin/python -m main -f examples/cml/example.cml
-```
+✍️ Prioritizes readability - Easier to write/maintain than JSON/YAML for nested decisions
 
-### CML input example:
+🧩 Enables extensibility - Built-in support for future decision-making constructs
+
+    “Why create a new syntax? Existing formats force decision trees into data structures, while CML makes the decision itself the first-class citizen.”
+
+
+### Supported formats:
+**CML**
 ```plain
 < Чё надо?
     < Шоколада
@@ -40,7 +37,62 @@ python -m venv .venv
 >
 ```
 
-### Output example:
+**JSON**
+```json
+{
+  "Чё надо?": {
+    "Шоколада": {
+      "pros": ["Вкусно", "Вкусненько"],
+      "cons": ["Зубки"]
+    },
+    "Маринада": {
+      "Почему?": {
+        "Потому что": {
+          "pros": ["Потому что потому"],
+          "cons": ["Да почему?!"]
+        },
+        "По качану": {
+          "cons": ["Не бейте"]
+        }
+      }
+    }
+  }
+}
+```
+
+**YAML**
+```yaml
+Чё надо?:
+  Шоколада:
+    pros:
+      - Вкусно
+      - Вкусненько
+    cons:
+      - Зубки
+  Маринада:
+    Почему?:
+      Потому что:
+        pros:
+          - Потому что потому
+        cons:
+          - Да почему?!
+      По качану:
+        cons:
+          - Не бейте
+```
+
+### Usage
+
+**Example**
+```shell
+git clone https://github.com/anarhehest/choice.git
+cd choice
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python -m main -f examples/cml/example.cml
+```
+
+**Output**
 ```plain
 > Чё надо?::Шоколада (2 - 1 = 1)
 > Чё надо?::Маринада::Почему?::Потому что (1 - 1 = 0)
