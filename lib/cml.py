@@ -1,4 +1,4 @@
-from collections.abc import Iterable, Mapping
+from collections.abc import Mapping
 from io import TextIOWrapper
 
 
@@ -6,7 +6,28 @@ class CML:
 
     @staticmethod
     def __tokenize(content):
-        return [x.strip() for x in content.split('\n')]
+        lines = [ln.strip() for ln in content.splitlines() if ln.strip() != ""]
+
+        # parsing oneliners
+        if len(lines) == 1:
+            line = lines[0]
+            stack = []
+            tokens = []
+            i = 0
+            while True:
+                if i == len(line)-1:
+                    tokens.append('>')
+                    return tokens
+                if line[i]:
+                    stack.append(line[i])
+                if line[i+1] in ('<', '>', '+', '-'):
+                    tokens.append(''.join(stack).strip())
+                    stack.clear()
+                i += 1
+
+        # else use splitted lines from above
+        else:
+            return [x.strip() for x in lines]
 
     @staticmethod
     def load(stream: TextIOWrapper) -> Mapping:

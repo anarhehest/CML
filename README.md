@@ -36,6 +36,10 @@ CML was born from the need for a decision-specific markup language that:
     >
 >
 ```
+OR use one line (*combining those two styles ARE NOT supported for now*)
+```plain
+< Чё надо? < Шоколада + Вкусно + Вкусненько - Зубки спасибо не скажут > < Маринада < Почему? < Потому что + Потому что потому - Да почему?! > < По качану - Не бейте > > > >
+```
 
 **JSON**
 ```json
