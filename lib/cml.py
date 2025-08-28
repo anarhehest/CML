@@ -6,7 +6,7 @@ class CML:
 
     @staticmethod
     def __tokenize(content):
-        lines = [ln.strip() for ln in content.splitlines() if ln.strip() != ""]
+        lines = [x.strip() for x in content.splitlines() if x.strip() != ""]
 
         # parsing oneliners
         if len(lines) == 1:
