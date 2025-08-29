@@ -5,29 +5,25 @@ from io import TextIOWrapper
 class CML:
 
     @staticmethod
-    def __tokenize(content):
-        lines = [x.strip() for x in content.splitlines() if x.strip() != ""]
+    def __tokenize(content) -> list[str]:
+        line = ' '.join([x.strip() for x in content.splitlines() if x.strip() != ""])
+        if not line:
+            return []
 
-        # parsing oneliners
-        if len(lines) == 1:
-            line = lines[0]
-            stack = []
-            tokens = []
-            i = 0
-            while True:
-                if i == len(line)-1:
-                    tokens.append('>')
-                    return tokens
-                if line[i]:
-                    stack.append(line[i])
-                if line[i+1] in ('<', '>', '+', '-'):
+        separators = set('<>+-')
+        stack = []
+        tokens = []
+
+        for char in line:
+            if char in separators:
+                if stack:
                     tokens.append(''.join(stack).strip())
                     stack.clear()
-                i += 1
+            stack.append(char)
 
-        # else use splitted lines from above
-        else:
-            return [x.strip() for x in lines]
+        return tokens
+
+
 
     @staticmethod
     def load(stream: TextIOWrapper) -> Mapping:
