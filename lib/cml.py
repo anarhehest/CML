@@ -24,7 +24,6 @@ class CML:
         return tokens
 
 
-
     @staticmethod
     def load(stream: TextIOWrapper) -> Mapping:
 
