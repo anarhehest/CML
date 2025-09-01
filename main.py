@@ -1,23 +1,17 @@
 import argparse
 
-from lib.data import Choice
-from lib.file import File
+from lib.file import load
+from lib.choice import Choice
 
 
-def main(file):
-    data = File.load(file)
+def main(args):
+    data = load(args.file)
     choice = Choice()
     choice.evaluate(data)
-
-    for option, stats in choice.results.items():
-        print(f'> {option} ({stats['pros']} - {stats["cons"]} = {stats["total"]})')
-
-    for option, stats in choice.choose():
-        print(f'< {option} ({stats['total']})')
+    choice.print_result()
 
 
 if __name__ == "__main__":
     argparse = argparse.ArgumentParser()
     argparse.add_argument("-f", "--file", required=True)
-    args = argparse.parse_args()
-    main(args.file)
+    main(argparse.parse_args())

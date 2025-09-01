@@ -33,3 +33,9 @@ class Choice:
             for option, stats in self.results.items()
             if stats['total'] == max(item['total'] for item in self.results.values())
         ]
+
+    def print_result(self):
+        for option, stats in self.results.items():
+            print(f'> {option} ({stats['pros']} - {stats["cons"]} = {stats["total"]})')
+        for option, stats in self.choose():
+            print(f'< {option} ({stats['total']})')
